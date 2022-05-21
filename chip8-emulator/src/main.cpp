@@ -100,6 +100,7 @@ void addTextToLog(string const& text); // Used as callback for CHIP-8 class
 
 // Internal
 CHIP8 chip8(currentPath);
+int currentBreakPoint = 0;
 
 int cyclesPerFrame = 5;
 bool running, halted, step;
@@ -142,12 +143,23 @@ int main(int argc, char** argv)
 			{
 				events();
 				chip8.emulateCycle();
+				if (chip8.getPC() == currentBreakPoint)
+				{
+					logger::info("At breakpoint");
+					consoleItems.push_back(_strdup("At breakpoint"));
+					halted = true;
+				}
 				chip8.lastKey = -1;
 			}
 			if (chip8.caughtEndlessLoop()) halted = true;
 			if (step)
 			{
 				chip8.emulateCycle();
+				if (chip8.getPC() == currentBreakPoint)
+				{
+					logger::info("At breakpoint");
+					consoleItems.push_back(_strdup("At breakpoint"));
+				}
 				step = false;
 			}
 		}
@@ -808,15 +820,59 @@ void executeCommand(const char* cmd)
 			consoleItems.push_back(_strdup("Unstopped"));
 		}
 	}
-	else if (TEXT_CMP3(cmd, i, ins, instruction))
-	{
-		logger::info("Got instruction command");
-		consoleItems.push_back(_strdup("UNIMPLEMENTED")); // TODO: Implement
-	}
-	else if (TEXT_CMP2(cmd, bp, breakpoint))
+	else if (!strncmp(cmd, "bp", 2) || !strncmp(cmd, "breakpoint", 10))
 	{
 		logger::info("Got breakpoint command");
-		consoleItems.push_back(_strdup("UNIMPLEMENTED")); // TODO: Implement
+		if (cmd[0] == 'b' && cmd[1] == 'p')
+		{
+			try
+			{
+				currentBreakPoint = stoi(string(cmd).substr(2, strlen(cmd)), nullptr, 0);
+			}
+			catch (invalid_argument const& e)
+			{
+				logger::error("Got invalid argument");
+				consoleItems.push_back(_strdup("ERROR: Got invalid argument"));
+				return;
+			}
+		}
+		else 
+		{
+			try
+			{
+				currentBreakPoint = stoi(string(cmd).substr(10, strlen(cmd)), nullptr, 0);
+			}
+			catch (invalid_argument const& e)
+			{
+				logger::error("Got invalid argument");
+				consoleItems.push_back(_strdup("ERROR: Got invalid argument"));
+				return;
+			}
+		}
+	}
+	else if (!strncmp(cmd, "dump", 4))
+	{
+		logger::info("Got dump command");
+
+		stringstream res;
+		int addr;
+		res << "Memory: " << endl;
+		try
+		{
+			addr = stoi(string(cmd).substr(4, strlen(cmd)), nullptr, 0);
+		}
+		catch (invalid_argument const& e)
+		{
+			logger::error("Got invalid argument");
+			consoleItems.push_back(_strdup("ERROR: Got invalid argument"));
+			return;
+		}
+		for (int i = 0; i < 5; i++)
+		{
+			res << "[" << hex << setw(4) << i + addr << "]: " << (unsigned) chip8.getFromRam(i + addr) << endl;
+		}
+
+		consoleItems.push_back(_strdup(res.str().c_str()));
 	}
 	else
 	{
