@@ -16,4 +16,4 @@ WRITTEN FOR EDUCATIONAL PURPOSES
 - Disassembling and assembling
 - Marks support (with "value" of mark)
 - Different styles of comments
-- Provided two ROMs (`chip8calc.ch8` and `chip8start.ch8`) with its source code which were compiled by this assembler
+- Provided two ROMs (`chip8calc.ch8`, `chip8start.ch8` and `dumbArcanoid.ch8` (in examples dir)) with its source code which were compiled by this assembler
