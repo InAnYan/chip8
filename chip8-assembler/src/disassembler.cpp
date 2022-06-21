@@ -66,7 +66,10 @@ namespace assembler
 			res << "sne V" << hex << ((code >> 8) & 0x0F) << ", 0x" << (code & 0x00FF);
 			break;
 		case 0x5:
-			res << "se V" << hex << ((code >> 8) & 0x0F) << ", V" << ((code & 0x00FF) >> 4);
+			if ((code & 0x000F) == 0)
+				res << "se V" << hex << ((code >> 8) & 0x0F) << ", V" << ((code & 0x00FF) >> 4);
+			else
+				res << "dw 0x" << hex << code;
 			break;
 		case 0x6:
 			res << "ld V" << hex << ((code >> 8) & 0x0F) << ", 0x" << (code & 0x00FF);

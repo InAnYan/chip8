@@ -245,13 +245,13 @@ endlessLoop:
 	jp [endlessLoop]
 
 printCharPos: // like a variable
-	db 0x0101
+	dw 0x0101
 
 NEW_LINE_KEY: // all "variables" should be two bytes long
-	db 0x000A
+	dw 0x000A
 
 INPUT_KEY:	
-	db 0x0010
+	dw 0x0010
 
 // 1000 0000
 // 0100 0000
@@ -260,9 +260,9 @@ INPUT_KEY:
 // 1000 0000
 
 INPUT_SYMBOL_SPRITE:	
-	db 0x8040
-	db 0x2040
-	db 0x8000
+	dw 0x8040
+	dw 0x2040
+	dw 0x8000
 
 // 0000 0000
 // 0000 0000
@@ -271,28 +271,28 @@ INPUT_SYMBOL_SPRITE:
 // 0000 0000
 
 MINUS_SYMBOL_SPRITE:
-	db 0x0000
-	db 0xF000
-	db 0x0000
+	dw 0x0000
+	dw 0xF000
+	dw 0x0000
 
 MINUS_KEY:
-	db 0x0015
+	dw 0x0015
 
 inputBuffer:
-	db 0x0000
-	db 0x0000
-	db 0x0000
-	db 0x0000
+	dw 0x0000
+	dw 0x0000
+	dw 0x0000
+	dw 0x0000
 
 bcdPrintBUffer:
-	db 0x0000
-	db 0x0000
+	dw 0x0000
+	dw 0x0000
 
 unprintKey:
-	db 0x0000
+	dw 0x0000
 
 lastKey:
-	db 0x0000
+	dw 0x0000
 
 // 0000 0000
 // 0100 0000
@@ -300,9 +300,9 @@ lastKey:
 // 0100 0000
 // 0000 0000
 PLUS_SYMBOL_SPRITE:
-	db 0x0040
-	db 0xe040
-	db 0x0000
+	dw 0x0040
+	dw 0xe040
+	dw 0x0000
 
 // 0000 0000
 // 1001 0000
@@ -310,9 +310,9 @@ PLUS_SYMBOL_SPRITE:
 // 0110 0000
 // 1001 0000
 MULTIP_SYMBOL_SPRITE:
-	db 0x0090
-	db 0x6060
-	db 0x9000
+	dw 0x0090
+	dw 0x6060
+	dw 0x9000
 
 // 0001 0000
 // 0010 0000
@@ -320,6 +320,6 @@ MULTIP_SYMBOL_SPRITE:
 // 0100 0000
 // 1000 0000
 DIV_SYMBOL_SPRITE:
-	db 0x1020
-	db 0x6040
-	db 0x8000
+	dw 0x1020
+	dw 0x6040
+	dw 0x8000

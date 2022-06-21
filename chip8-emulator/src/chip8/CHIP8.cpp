@@ -68,7 +68,7 @@ string CHIP8::disasmCode(int code)
         }
         else
         {
-            res << "db 0x" << hex << code;
+            res << "dw 0x" << hex << code;
             return res.str();
         }
     }
@@ -88,7 +88,10 @@ string CHIP8::disasmCode(int code)
         res << "sne V" << hex << ((code >> 8) & 0x0F) << ", 0x" << (code & 0x00FF);
         break;
     case 0x5:
-        res << "se V" << hex << ((code >> 8) & 0x0F) << ", V" << ((code & 0x00FF) >> 4);
+        if((code & 0x000F) == 0)
+            res << "se V" << hex << ((code >> 8) & 0x0F) << ", V" << ((code & 0x00FF) >> 4);
+        else
+            res << "dw 0x" << hex << code;
         break;
     case 0x6:
         res << "ld V" << hex << ((code >> 8) & 0x0F) << ", 0x" << (code & 0x00FF);
@@ -127,7 +130,7 @@ string CHIP8::disasmCode(int code)
             res << "shl V" << ((code >> 8) & 0x0F);
             break;
         default:
-            res << "db 0x" << hex << code;
+            res << "dw 0x" << hex << code;
             break;
         }
         break;
@@ -156,7 +159,7 @@ string CHIP8::disasmCode(int code)
             res << "sknp V" << hex << ((code >> 8) & 0x0F);
             break;
         default:
-            res << "db 0x" << hex << code;
+            res << "dw 0x" << hex << code;
             break;
         }
         break;
@@ -191,12 +194,12 @@ string CHIP8::disasmCode(int code)
             res << "ld V" << hex << ((code >> 8) & 0x0F) << ", [I]";
             break;
         default:
-            res << "db 0x" << hex << code;
+            res << "dw 0x" << hex << code;
             break;
         }
         break;
     default:
-        res << "db 0x" << hex << code;
+        res << "dw 0x" << hex << code;
         break;
     }
 

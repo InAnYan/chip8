@@ -29,7 +29,7 @@ using namespace assembler;
 
 static set<string> keywords = {"cls", "ret", "ld", "and", "or", "xor", "call", 
 							   "se", "sne", "add", "sub", "shr", "shl", "subn",
-							   "db", "jp", "rnd", "drw", "skp", "sknp"};
+							   "dw", "jp", "rnd", "drw", "skp", "sknp"};
 
 inline string assembler::token_type_to_string(token_type type)
 {
@@ -76,8 +76,8 @@ std::shared_ptr<vector<assembler::token_t>> assembler::tokenize(shared_ptr<vecto
 
 		for(size_t textPos = 0; textPos <= currentLine.size(); textPos++)
 		{
-			if((currentLine[textPos] != ' ' && currentLine[textPos] != '\t' 
-				&& currentLine[textPos] != '\r' && currentLine[textPos] != ',') && (textPos != currentLine.size()))
+			if((currentLine[textPos] != ' ' && currentLine[textPos] != '\t' && 
+				currentLine[textPos] != '\r' && currentLine[textPos] != ',') && (textPos != currentLine.size()))
 			{
 				buf << currentLine[textPos];
 			}
@@ -147,7 +147,7 @@ program parser::parse()
 
 			res->push_back(move(parseCmd()));
 			scope[t.str] = pair<dbyte, dbyte>(pos, 0);
-			if ((*res)[res->size() - 1]->getCommand().str == "db")
+			if ((*res)[res->size() - 1]->getCommand().str == "dw")
 				scope[t.str].second = (*res)[res->size() - 1]->codegen(scope);
 		}
 		else
@@ -160,7 +160,7 @@ program parser::parse()
 }
 
 static set<string> noArgsCmds = {"cls", "ret"};
-static set<string> oneArgsCmds = {"call", "skp", "sknp", "shr", "shl", "db"};
+static set<string> oneArgsCmds = {"call", "skp", "sknp", "shr", "shl", "dw"};
 static set<string> twoArgsCmds = {"se", "sne", "ld", "add", "or", "xor", 
 								  "sub", "subn", "rnd", "and"};
 
@@ -313,7 +313,7 @@ int assembler::expression::codegen(context scope)
 		CODEGEN_ASSERT(arg1, REGISTER);
 		return 0x8000 + parser::parseReg(arg1) * 0x100 + 0x06; // 0x8xy6
 	}
-	else if (cmd.str == "db")
+	else if (cmd.str == "dw")
 	{
 		CODEGEN_ASSERT_VALUE(arg1);
 		return parser::parseValue(arg1, scope, 0xFFFF);
@@ -471,7 +471,7 @@ int parser::parseReg(token t)
 	{
 		return stoi(string(1, t.str[1]), nullptr, 16);
 	}
-	catch (invalid_argument const& e)
+	catch (...)
 	{
 		throw assembler_exception("can't parse register", t.line, t.pos);
 	}

@@ -36,4 +36,15 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="examples\chip8calc.asm">
+      <Filter>Исходные файлы</Filter>
+    </None>
+    <None Include="examples\chip8start.asm">
+      <Filter>Исходные файлы</Filter>
+    </None>
+    <None Include="examples\dumbArcanoid.asm">
+      <Filter>Исходные файлы</Filter>
+    </None>
+  </ItemGroup>
 </Project>

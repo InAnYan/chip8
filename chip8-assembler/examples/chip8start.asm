@@ -1,7 +1,7 @@
 // chip8-assembler v0.7 - assembler written in educational purposes
 // Uses Cowgods Chip-8 Technical Reference v1.0
 // http://devernay.free.fr/hacks/chip8/C8TECH10.HTM
-// Features: mark support, db command with mark as constant variable
+// Features: mark support, dw command with mark as constant variable
 // Stability and correctness are not guaranteed
 
 jp [main] // jump to the address of mark
@@ -12,9 +12,9 @@ jp [main] // jump to the address of mark
 // 0011 0000
 // 0000 1110
 C_SPRITE:
-    db 0x0e30 // db command is always 2 dytes long
-    db 0x3030
-    db 0x0e00
+    dw 0x0e30 // dw command is always 2 bytes long
+    dw 0x3030
+    dw 0x0e00
 
 ; 0110 0110 - multiple comments style
 ; 0110 0110
@@ -22,9 +22,9 @@ C_SPRITE:
 ; 0110 0110
 ; 0110 0110
 H_SPRITE:
-    db 0x6666
-    db 0x7e66
-    db 0x6600
+    dw 0x6666
+    dw 0x7e66
+    dw 0x6600
 
 -- 0011 1100
 -- 0001 1000
@@ -32,9 +32,9 @@ H_SPRITE:
 -- 0001 1000
 -- 0011 1100
 I_SPRITE:
-    db 0x3c18
-    db 0x1818
-    db 0x3c00
+    dw 0x3c18
+    dw 0x1818
+    dw 0x3c00
 
 // 0011 1100
 // 0011 0110
@@ -42,9 +42,9 @@ I_SPRITE:
 // 0011 0000
 // 0011 0000
 P_SPRITE:
-    db 0x3c36
-    db 0x3c30
-    db 0x3000
+    dw 0x3c36
+    dw 0x3c30
+    dw 0x3000
 
 // 0000 0000
 // 0000 0000
@@ -52,12 +52,12 @@ P_SPRITE:
 // 0000 0000
 // 0000 0000
 MINUS_SPRITE:
-    db 0x0000
-    db 0x7e00
-    db 0x0000
+    dw 0x0000
+    dw 0x7e00
+    dw 0x0000
 
 DOT_SPRITE:
-    db 0x1000
+    dw 0x1000
 
 main:
     ld v0, 9
@@ -108,7 +108,7 @@ loop:
 
 drw1:
     ld v0, 18
-    ld v1, $SECOND_OFFSET // $ operator returns the value of mark (the db command)
+    ld v1, $SECOND_OFFSET // $ operator returns the value of mark (the dw command)
     ld I, [C_SPRITE]
     drw v0, v1, 5
     jp [loop]
@@ -138,5 +138,5 @@ endlessLOOP:
     jp [endlessLOOP]
 
 SECOND_OFFSET: // the marks can be everywhere, even if mark declared after it was used
-    db 0x0013 // the marks calculated into pairs<address, value>; value is a db command
-// Of course, those marks' values are generated at compile time
+    dw 0x0013 // the marks calculated into pairs<address, value>; value is a dw command
+// Those marks' values are generated at compile time

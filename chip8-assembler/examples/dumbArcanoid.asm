@@ -109,37 +109,37 @@ blockCollision:
 
 // 1000 0001
 PLATE_SPRITE_2:
-    db 0x8100
+    dw 0x8100
 
 // 1000 0000
 DOT_SPRITE:
-    db 0x8000
+    dw 0x8000
 
 // 1111 1111
 PLATE_SPRITE:
-    db 0xFF00
+    dw 0xFF00
 
 SCREEN_X: ; you can change this for Super CHIP-8
-    db 63
+    dw 63
 
 SCREEN_X_FOR_PADS: ; unfortunately, can't use ariphmetic operations for constant values
-    db 0x40
+    dw 0x40
 
 SCREEN_Y: ; you can change this for Super CHIP-8
-    db 31
+    dw 31
 
 PLATE_Y:
-    db 28
+    dw 28
 
 PLATE_X:
-    db 23
+    dw 23
 
 // 0111 1110
 PAD_SPRITE:
-    db 0x7E00
+    dw 0x7E00
 
 PADS_START:
-    db 5
+    dw 5
 
 PADS_END:
-    db 15
+    dw 15

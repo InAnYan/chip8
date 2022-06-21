@@ -100,8 +100,8 @@ namespace assembler
 
 		unique_ptr<expression> parseCmd();
 	public:
-		parser(shared_ptr<vector<token_t>> tokens, context_t& scope) : tokens(tokens), scope(scope)
-			, parserPos(0), parserCodePos(0), parserLinePos(0) {}
+		parser(shared_ptr<vector<token_t>> tokens, context_t& scope) : tokens(tokens), scope(scope),
+			parserPos(0), parserCodePos(0), parserLinePos(0) {}
 
 		program parse();
 
