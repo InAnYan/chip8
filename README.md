@@ -1,3 +1,7 @@
+---
+title: CHIP-8 emulator, assembler, and disassembler
+---
+
 ## Description
 chip8-emulator - CHIP-8 emulator written in C++, which uses "Dear ImGui" library.
 chip8-assembler - CHIP-8 assembler and disassembler.
